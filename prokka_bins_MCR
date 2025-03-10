@@ -1,0 +1,90 @@
+The SIP MetaT’s are located here: /proj/omics/huber/selkassas/MCR_RNASIP (still need tar unzipped)
+The Raw MetaG and MetaT files are located here:/proj/omics/huber/shu/mcr-metag-frenemies/output-data
+
+1. Annotating MAGs using Prokka
+	•	MAGs (Allot ~10gb for each site x 10 sites = 100 gb)
+	•	slurm file name: MCR_bins_prokka.sh
+
+#!/bin/bash
+#SBATCH --partition=compute              # Queue selection
+#SBATCH --job-name=MCR_prokka_bins       # Job name
+#SBATCH --mail-type=ALL                  # Mail events (BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=selkassas@whoi.edu   # Where to send mail
+#SBATCH --ntasks=1                       # Run a single task
+#SBATCH --cpus-per-task=8                # Number of CPU cores per task
+#SBATCH --mem=90gb                      # Job memory request
+#SBATCH --time=24:00:00                  # Time limit hrs:min:sec
+#SBATCH --output=MCR_prokka_bins.log              # Standard output/error
+#export OMP_NUM_THREADS=8
+
+module load anaconda/5.1
+conda activate prokka
+
+#Arrow Loop
+#for file_AL in *fa
+#do
+#prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_bins/ArrowLoop/${file_AL}_annotation --prefix ${file_AL} ${file_AL}
+#done 
+
+#Mustard Stand
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/metabat2/MustardStand/
+for file_MS in *.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_bins/MustardStand/${file_MS}_annotation --prefix ${file_MS} ${file_MS} 
+done 
+
+#Rav2
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/metabat2/Rav2/
+for file_R2 in *.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_bins/Rav2/${file_R2}_annotation --prefix ${file_R2} ${file_R2} 
+done 
+
+#Shrimpocalypse
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/metabat2/Shrimpocalypse/
+for file_SP in *.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_bins/Shrimpocalypse/${file_SP}_annotation --prefix ${file_SP} ${file_SP}
+done 
+
+#White Castle
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/metabat2/WhiteCastle/
+for file_WC in *.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_bins/WhiteCastle/${file_WC}_annotation --prefix ${file_WC} ${file_WC}
+done 
+
+#Lots O’Shrimp
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/metabat2/LotsOShrimp/
+for file_LOS in *.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_bins/LotsOShrimp/${file_LOS}_annotation --prefix ${file_LOS} ${file_LOS}
+done 
+
+#Old Man Tree
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/metabat2/OldManTree/
+for file_OMT in *.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_bins/OldManTree/${file_OMT}_annotation --prefix ${file_OMT} ${file_OMT}
+done 
+
+#Shrimp Hole
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/metabat2/ShrimpHole/
+for file_SH in *.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_bins/ShrimpHole/${file_SH}_annotation --prefix ${file_SH} ${file_SH}
+done 
+
+#South of Lung Snack
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/metabat2/SouthofLungSnack/
+for file_SOLS in *.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_bins/SouthofLungSnack/${file_SOLS}_annotation --prefix ${file_SOLS} ${file_SOLS}
+done 
+
+#X18
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/metabat2/X18/
+for file_X18 in *.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_bins/X18/${file_X18}_annotation --prefix ${file_X18} ${file_X18}
+done
