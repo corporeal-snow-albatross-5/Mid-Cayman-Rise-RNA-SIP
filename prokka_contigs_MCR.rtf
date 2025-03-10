@@ -1,375 +1,119 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2638
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;\f2\fnil\fcharset0 AndaleMono;
-}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;\red0\green0\blue0;
-}
-{\*\expandedcolortbl;;\csgray\c0;\csgray\c0\c0;\cssrgb\c0\c0\c0;
-}
-{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
-{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
-\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\deftab720
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+2. Annotating Metagenomic assemblies using Prokka
+	•	MAGs (Allot ~10gb for each site x 10 sites = 100 gb)
+	•	slurm file name: MCR_contigs_prokka.sh
+	•	Need to split into 3
 
-\f0\fs24 \cf2 \cb3 \CocoaLigature0 \
-\pard\pardeftab720\partightenfactor0
+#Script 1 
+#!/bin/bash
+#SBATCH --partition=compute              # Queue selection
+#SBATCH --job-name=MCR_prokka_metaGs_1     # Job name
+#SBATCH --mail-type=ALL                  # Mail events (BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=selkassas@whoi.edu   # Where to send mail
+#SBATCH --ntasks=1                       # Run a single task
+#SBATCH --cpus-per-task=8                # Number of CPU cores per task
+#SBATCH --mem=15gb                       # Job memory request
+#SBATCH --time=20:00:00                  # Time limit hrs:min:sec
+#SBATCH --output=MCR_prokka_metaGs_1.log   # Standard output/error
 
-\f1\b\fs36 \cf4 \expnd0\expndtw0\kerning0
-\CocoaLigature1 2. Annotating Metagenomic assemblies using Prokka\
-\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
-\ls1\ilvl0\cf4 \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}MAGs (Allot ~10gb for each site x 10 sites = 100 gb)\
-{\listtext	\uc0\u8226 	}slurm file name: MCR_contigs_prokka.sh\
-{\listtext	\uc0\u8226 	}Need to split into 3\
-\pard\tx720\pardeftab720\partightenfactor0
+module load anaconda/5.1
+source activate prokka 
 
-\f0\b0\fs24 \cf2 \CocoaLigature0 \
-
-\fs36 \ul #Script 1 
-\fs24 \ulnone \
-\pard\tx4482\pardeftab720\sl300\partightenfactor0
-
-\fs22 #!/bin/bash\
-#SBATCH --partition=compute              # Queue selection\
-#SBATCH --job-name=MCR_prokka_metaGs_1     # Job name\
-#SBATCH --mail-type=ALL                  # Mail events (BEGIN, END, FAIL, ALL)\
-#SBATCH --mail-user=selkassas@whoi.edu   # Where to send mail\
-#SBATCH --ntasks=1                       # Run a single task\
-#SBATCH --cpus-per-task=8                # Number of CPU cores per task\
-#SBATCH --mem=15gb                       # Job memory request\
-#SBATCH --time=20:00:00                  # Time limit hrs:min:sec\
-#SBATCH --output=MCR_prokka_metaGs_1.log   # Standard output/error\
-\
-module load anaconda/5.1\
-source activate prokka
-\fs24  \
-\pard\tx720\pardeftab720\partightenfactor0
-\
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
-
-\f1\b\fs28 \cf4 \CocoaLigature1 #Arrow Loop\
-
-\f0\b0 cd 
-\f2\fs24 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/ArrowLoop/\
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
-
-\f0 \cf4 \CocoaLigature1 for file_AL in 
-\f2 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/ArrowLoop/final.contigs.fa
-\f0 \CocoaLigature1 \
+#Arrow Loop
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/ArrowLoop/
+for file_AL in /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/ArrowLoop/final.contigs.fa
 do
-\fs22 \cf2 \CocoaLigature0 \
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_metaG_contigs/ArrowLoop_annotation --prefix ArrowLoop ${file_AL}
+done 
 
-\fs24 \cf4 \CocoaLigature1 prokka \expnd0\expndtw0\kerning0
---outdir 
-\f2 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/
-\f0 prokka_metaG_contigs/ArrowLoop_annotation --prefix ArrowLoop $\{file_AL\}\
-done \CocoaLigature1 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+#Mustard Stand
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/MustardStand/
+for file_MS in /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/MustardStand/final.contigs.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_metaG_contigs/MustardStand_annotation --prefix MustardStand ${file_MS} 
+done 
 
-\f1\b\fs36 \cf4 \expnd0\expndtw0\kerning0
-\
-\pard\tx720\pardeftab720\partightenfactor0
+#Rav2
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/Rav2/
+for file_R2 in /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/Rav2/final.contigs.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_metaG_contigs/Rav2_annotation --prefix Rav2 ${file_R2} 
+done 
 
-\fs28 \cf4 #Mustard Stand\
+#Script 2
+#!/bin/bash
+#SBATCH --partition=compute              # Queue selection
+#SBATCH --job-name=MCR_prokka_metaGs_2     # Job name
+#SBATCH --mail-type=ALL                  # Mail events (BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=selkassas@whoi.edu   # Where to send mail
+#SBATCH --ntasks=1                       # Run a single task
+#SBATCH --cpus-per-task=8                # Number of CPU cores per task
+#SBATCH --mem=15gb                       # Job memory request
+#SBATCH --time=20:00:00                  # Time limit hrs:min:sec
+#SBATCH --output=MCR_prokka_metaGs_2.log   # Standard output/error
 
-\f0\b0 cd 
-\f2\fs24 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/MustardStand/
-\f1\b\fs36 \expnd0\expndtw0\kerning0
-\CocoaLigature1 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+module load anaconda/5.1
+source activate prokka 
 
-\f0\b0\fs24 \cf4 \kerning1\expnd0\expndtw0 for file_MS in 
-\f2 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/MustardStand/final.contigs.fa
-\f0 \CocoaLigature1 \
-do \
-prokka \expnd0\expndtw0\kerning0
---outdir 
-\f2 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/
-\f0 prokka_metaG_contigs/
-\f2 MustardStand
-\f0 _annotation --prefix 
-\f2 MustardStand
-\f0  $\{file_MS\} \
-done \
-\
-\pard\tx720\pardeftab720\partightenfactor0
+#Shrimpocalypse
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/Shrimpocalypse/
+for file_SP in /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/Shrimpocalypse/final.contigs.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_metaG_contigs/Shrimpocalypse_annotation --prefix Shrimpocalypse ${file_SP}
+done 
 
-\f1\b\fs28 \cf4 \expnd0\expndtw0\kerning0
-\CocoaLigature1 #Rav2\
+#White Castle
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/WhiteCastle/
+for file_WC in /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/WhiteCastle/final.contigs.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_metaG_contigs/WhiteCastle_annotation --prefix WhiteCastle ${file_WC}
+done 
 
-\f0\b0 cd 
-\f2\fs24 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/Rav2/
-\f1\b\fs36 \expnd0\expndtw0\kerning0
-\CocoaLigature1 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+#Lots O’Shrimp
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/LotsOShrimp/
+for file_LOS in /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/LotsOShrimp/final.contigs.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_metaG_contigs/LotsOShrimp_annotation --prefix LotsOShrimp ${file_LOS}
+done 
 
-\f0\b0\fs24 \cf4 \kerning1\expnd0\expndtw0 for file_R2 in 
-\f2 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/Rav2/final.contigs.fa
-\f0 \CocoaLigature1 \
-do \
-prokka \expnd0\expndtw0\kerning0
---outdir 
-\f2 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/
-\f0 prokka_metaG_contigs/
-\f2 Rav2
-\f0 _annotation --prefix 
-\f2 Rav2
-\f0  $\{file_R2\} \
-done \
-\
-\pard\tx720\pardeftab720\partightenfactor0
+#Script 3
+#!/bin/bash
+#SBATCH --partition=compute              # Queue selection
+#SBATCH --job-name=MCR_prokka_metaGs_3     # Job name
+#SBATCH --mail-type=ALL                  # Mail events (BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=selkassas@whoi.edu   # Where to send mail
+#SBATCH --ntasks=1                       # Run a single task
+#SBATCH --cpus-per-task=8                # Number of CPU cores per task
+#SBATCH --mem=20gb                       # Job memory request
+#SBATCH --time=24:00:00                  # Time limit hrs:min:sec
+#SBATCH --output=MCR_prokka_metaGs_3.log   # Standard output/error
 
-\fs36 \cf2 \ul \ulc2 #Script 2
-\fs24 \cf4 \ulnone \
-\pard\tx4482\pardeftab720\sl300\partightenfactor0
+module load anaconda/5.1
+source activate prokka 
 
-\fs22 \cf2 #!/bin/bash\
-#SBATCH --partition=compute              # Queue selection\
-#SBATCH --job-name=MCR_prokka_metaGs_2     # Job name\
-#SBATCH --mail-type=ALL                  # Mail events (BEGIN, END, FAIL, ALL)\
-#SBATCH --mail-user=selkassas@whoi.edu   # Where to send mail\
-#SBATCH --ntasks=1                       # Run a single task\
-#SBATCH --cpus-per-task=8                # Number of CPU cores per task\
-#SBATCH --mem=15gb                       # Job memory request\
-#SBATCH --time=20:00:00                  # Time limit hrs:min:sec\
-#SBATCH --output=MCR_prokka_metaGs_2.log   # Standard output/error\
-\
-module load anaconda/5.1\
-source activate prokka
-\fs24  \
-\pard\tx4482\pardeftab720\sl300\partightenfactor0
-\cf4 \
-\pard\tx720\pardeftab720\partightenfactor0
+#Old Man Tree
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/OldManTree/
+for file_OMT in /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/OldManTree/final.contigs.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_metaG_contigs/OldManTree_annotation --prefix OldManTree ${file_OMT}
+done 
 
-\f1\b\fs28 \cf4 \expnd0\expndtw0\kerning0
-\CocoaLigature1 #Shrimpocalypse\
+#Shrimp Hole
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/ShrimpHole/
+for file_SH in /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/ShrimpHole/final.contigs.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_metaG_contigs/ShrimpHole_annotation --prefix ShrimpHole ${file_SH}
+done 
 
-\f0\b0 cd 
-\f2\fs24 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/Shrimpocalypse/
-\f1\b\fs36 \expnd0\expndtw0\kerning0
-\CocoaLigature1 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
+#South of Lung Snack
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/SouthofLungSnack/
+for file_SOLS in /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/SouthofLungSnack/final.contigs.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_metaG_contigs/SouthofLungSnack_annotation --prefix SouthofLungSnack ${file_SOLS}
+done 
 
-\f0\b0\fs24 \cf4 \kerning1\expnd0\expndtw0 for file_SP in 
-\f2 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/Shrimpocalypse/final.contigs.fa
-\f0 \CocoaLigature1 \
-do \
-prokka \expnd0\expndtw0\kerning0
---outdir 
-\f2 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/
-\f0 prokka_metaG_contigs/
-\f2 Shrimpocalypse
-\f0 _annotation --prefix 
-\f2 Shrimpocalypse
-\f0  $\{file_SP\}\
-done \
-\
-\pard\tx720\pardeftab720\partightenfactor0
-
-\f1\b\fs28 \cf4 \expnd0\expndtw0\kerning0
-\CocoaLigature1 #White Castle\
-
-\f0\b0 cd 
-\f2\fs24 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/WhiteCastle/
-\f1\b\fs36 \expnd0\expndtw0\kerning0
-\CocoaLigature1 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
-
-\f0\b0\fs24 \cf4 \kerning1\expnd0\expndtw0 for file_WC in 
-\f2 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/WhiteCastle/final.contigs.fa
-\f0 \CocoaLigature1 \
-do \
-prokka \expnd0\expndtw0\kerning0
---outdir 
-\f2 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/
-\f0 prokka_metaG_contigs/
-\f2 WhiteCastle
-\f0 _annotation --prefix 
-\f2 WhiteCastle
-\f0  $\{file_WC\}\
-done \
-\
-\pard\tx720\pardeftab720\partightenfactor0
-
-\f1\b\fs28 \cf4 \expnd0\expndtw0\kerning0
-\CocoaLigature1 #Lots O\'92Shrimp\
-
-\f0\b0 cd 
-\f2\fs24 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/LotsOShrimp/
-\f1\b\fs36 \expnd0\expndtw0\kerning0
-\CocoaLigature1 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
-
-\f0\b0\fs24 \cf4 \kerning1\expnd0\expndtw0 for file_LOS in 
-\f2 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/LotsOShrimp/final.contigs.fa
-\f0 \CocoaLigature1 \
-do \
-prokka \expnd0\expndtw0\kerning0
---outdir 
-\f2 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/
-\f0 prokka_metaG_contigs/
-\f2 LotsOShrimp
-\f0 _annotation --prefix 
-\f2 LotsOShrimp
-\f0  $\{file_LOS\}\
-done \
-\
-\pard\tx720\pardeftab720\partightenfactor0
-
-\fs36 \cf2 \ul \ulc2 #Script 3
-\fs24 \cf4 \ulnone \
-\pard\tx4482\pardeftab720\sl300\partightenfactor0
-
-\fs22 \cf2 #!/bin/bash\
-#SBATCH --partition=compute              # Queue selection\
-#SBATCH --job-name=MCR_prokka_metaGs_3     # Job name\
-#SBATCH --mail-type=ALL                  # Mail events (BEGIN, END, FAIL, ALL)\
-#SBATCH --mail-user=selkassas@whoi.edu   # Where to send mail\
-#SBATCH --ntasks=1                       # Run a single task\
-#SBATCH --cpus-per-task=8                # Number of CPU cores per task\
-#SBATCH --mem=20gb                       # Job memory request\
-#SBATCH --time=24:00:00                  # Time limit hrs:min:sec\
-#SBATCH --output=MCR_prokka_metaGs_3.log   # Standard output/error\
-\
-module load anaconda/5.1\
-source activate prokka
-\fs24  \cf4 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
-\cf4 \
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural\partightenfactor0
-
-\f1\b\fs28 \cf4 \CocoaLigature1 #Old Man Tree\
-
-\f0\b0 cd 
-\f2\fs24 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/OldManTree/
-\f0 \CocoaLigature1 \
-for file_OMT in 
-\f2 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/OldManTree/final.contigs.fa
-\f0 \CocoaLigature1 \
-do \
-prokka \expnd0\expndtw0\kerning0
---outdir 
-\f2 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/
-\f0 prokka_metaG_contigs/
-\f2 OldManTree
-\f0 _annotation --prefix 
-\f2 OldManTree
-\f0  $\{file_OMT\}\
-done \
-\
-
-\f1\b\fs28 \CocoaLigature1 #Shrimp Hole\
-
-\f0\b0 cd 
-\f2\fs24 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/ShrimpHole/
-\f0 \CocoaLigature1 \
-for file_SH in 
-\f2 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/ShrimpHole/final.contigs.fa
-\f0 \CocoaLigature1 \
-do \
-prokka \expnd0\expndtw0\kerning0
---outdir 
-\f2 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/
-\f0 prokka_metaG_contigs/
-\f2 ShrimpHole
-\f0 _annotation --prefix 
-\f2 ShrimpHole
-\f0  $\{file_SH\}\
-done \
-\
-
-\f1\b\fs28 \CocoaLigature1 #South of Lung Snack\
-
-\f0\b0 cd 
-\f2\fs24 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/SouthofLungSnack/
-\f0 \CocoaLigature1 \
-for file_SOLS in 
-\f2 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/SouthofLungSnack/final.contigs.fa
-\f0 \CocoaLigature1 \
-do \
-prokka \expnd0\expndtw0\kerning0
---outdir 
-\f2 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/
-\f0 prokka_metaG_contigs/
-\f2 SouthofLungSnack
-\f0 _annotation --prefix 
-\f2 SouthofLungSnack
-\f0  $\{file_SOLS\}\
-done \
-\
-
-\f1\b\fs28 \CocoaLigature1 #X18\
-
-\f0\b0 cd 
-\f2\fs24 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/X18/
-\f0 \CocoaLigature1 \
-for file_X18 in 
-\f2 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/megahit/X18/final.contigs.fa
-\f0 \CocoaLigature1 \
-do \
-prokka \expnd0\expndtw0\kerning0
---outdir 
-\f2 \kerning1\expnd0\expndtw0 \CocoaLigature0 /
-\f0\fs22 \cf2 proj
-\f2\fs24 \cf4 /omics/huber/shu/mcr-metag-frenemies/output-data/
-\f0 prokka_metaG_contigs/X18_annotation --prefix 
-\f2 X18
-\f0  $\{file_X18\}\
-done}
+#X18
+cd /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/X18/
+for file_X18 in /proj/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/X18/final.contigs.fa
+do 
+prokka --outdir /proj/omics/huber/shu/mcr-metag-frenemies/output-data/prokka_metaG_contigs/X18_annotation --prefix X18 ${file_X18}
+done
