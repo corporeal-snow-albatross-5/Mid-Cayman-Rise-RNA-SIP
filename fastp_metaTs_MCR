@@ -1,0 +1,40 @@
+2. Trim adapter sequences using fastp (v0.24.0). It also quality checks it for you and automatically detects adapter sequences,
+which is why I chose to do this one instead of trimmomatic. So no need to do fastQC!
+
+#install fastp in condo environment
+conda create —-name fastp
+conda install bioconda::fastp
+
+#first do: 
+for file in *fastq.gz; do echo ${file} | cut -d _ -f 1 ; done > filenames.txt
+#to get a big file with all of the file names without the suffix attached. 
+
+filename for bash file: fastp_mcr_loop.sh 
+
+*make sure you put your .sh and .txt files into the directory with the files you want to process! 
+
+#!/bin/bash
+#SBATCH --partition=compute
+#SBATCH --job-name=fastp
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=selkassas@whoi.edu
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=15gb
+#SBATCH --time=15:00:00
+#SBATCH --output=fastp.log
+#export OMP_NUM_THREADS=12
+
+eval "$(/vortexfs1/home/selkassas/miniforge3/bin/conda shell.bash hook)" 
+conda init
+conda activate /vortexfs1/home/selkassas/miniforge3/envs/fastp
+
+cd /proj/omics/huber/selkassas/MCR_RNASIP/Elkassas_20220624
+
+for see in $(cat ${1}) #this 1 stands for how you submit the loop, using batch {.sh file for slurm} {filenames file}
+do
+fastp --detect_adapter_for_pe -i ${seq}_R1.fastq.gz -I ${seq}_R2.fastq.gz -o ${seq}_R1.trim.fastq.gz -O ${seq}_R2.trim.fastq.gz --unpaired1 ${seq}_R1.unpaired.fastq.gz --unpaired2 ${seq}_R2.unpaired.fastq.gz 
+done
+
+and submitted the job using:
+sbatch fastp_mcr_loop.sh filenames.txt
