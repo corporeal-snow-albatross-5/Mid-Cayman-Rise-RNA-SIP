@@ -1,0 +1,50 @@
+3. Classifying taxonomy of metagenomes using GTDB_tk v2.4.0 with prodigal V2.6.3
+Conda environment: gtdb-tk_2.4.0
+conda environment location: /vortexfs1/home/selkassas/miniforge3/envs/gtdb_tk-2.4.0
+This is the link to the contigs: /vortexfs1/omics/huber/shu/mcr-metag-frenemies/output-data/megahit/ArrowLoop/final.contigs.fa 
+slurm file name: MCR_contigs_GTDB_tk.sh
+
+Automatic db download:                                                                                                                                                                                   
+                                                                                                                                                                                                 
+        1. Run the command "download-db.sh" to automatically download and extract to:                                                                                                            
+            /vortexfs1/home/selkassas/miniforge3/envs/gtdb_tk-2.4.0/share/gtdbtk-2.4.0/db/                                                                                                       
+                                                                                                                                                                                                 
+Manual db download:                                                                                                                                                                                      
+                                                                                                                                                                                                 
+        1. Manually download the latest reference data:                                                                                                                                          
+            wget https://data.gtdb.ecogenomic.org/releases/release220/220.0/auxillary_files/gtdbtk_package/full_package/gtdbtk_r220_data.tar.gz                                                  
+                                                                                                                                                                                                 
+        2. Extract the archive to a target directory:                                                                                                                                            
+            tar -xvzf gtdbtk_r220_data.tar.gz -C "/path/to/target/db" --strip 1 > /dev/null                                                                                                      
+            rm gtdbtk_r220_data.tar.gz                                                                                                                                                           
+                                                                                                                                                                                                 
+        3. Set the GTDBTK_DATA_PATH environment variable by running:                                                                                                                             
+            conda env config vars set GTDBTK_DATA_PATH="/path/to/target/db"    
+
+Length: 108491169765 (101G) [application/octet-stream]
+
+This download will take forever btw. 
+
+Set path to reference data: 
+conda env config vars set GTDBTK_DATA_PATH="/vortexfs1/omics/huber/db/gtdb_tk_220";                                                                                                            
+
+#Put all the metaG assembly fasta files in one directory: megahit_assemblies_fasta
+
+#!/bin/bash
+#SBATCH --partition=compute            # Queue selection
+#SBATCH --job-name=gtdb_tk_classify      # Job name
+#SBATCH --mail-type=ALL                  # Mail events (BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=selkassas@whoi.edu   # Where to send mail
+#SBATCH --ntasks=1                      # Run a single task
+#SBATCH --cpus-per-task=8               # Number of CPU cores per task
+#SBATCH --mem=50gb                       # Job memory request
+#SBATCH --time=24:00:00                  # Time limit hrs:min:sec
+#SBATCH --output=gtdb_tk_classify.log    # Standard output/error
+
+#export OMP_NUM_THREADS=36
+
+eval "$(/vortexfs1/home/selkassas/miniforge3/bin/conda shell.bash hook)" 
+conda activate /vortexfs1/home/selkassas/miniforge3/envs/gtdb_tk-2.4.0
+
+gtdbtk classify_wf --genome_dir /vortexfs1/omics/huber/shu/mcr-metag-frenemies/output-data/megahit_assemblies_fasta 
+--out_dir /vortexfs1/omics/huber/shu/mcr-metag-frenemies/output-data/gtdbtk_contig_taxonomy -x fa --skip_ani_screen
