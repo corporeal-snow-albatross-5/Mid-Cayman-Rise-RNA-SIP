@@ -5,6 +5,16 @@ QC, trimming, assembly, and binning of the unmanipulated fluid metagenomes were 
 
 QC and trimming of the unmanipulated fluid metatranscriptomes were done using the eukrhythmic pipeline (A. I. Krinos et al., 2023). 
 
-Contents:
-1) Script for (and notes on) the annotation of the 800 MAGs  - prokka_bins_MCR
-2) Script for (and notes on) the annotation of the metagenomic contigs - prokka_contigs_MCR
+## Scripts/notes:
+### For handling the metagenomic contigs: 
+1) Annotation of the 800 MAGs using Prokka v1.14.6-> prokka_bins_MCR
+2) Annotation of the metagenomic contigs using Prokka v1.14.6 -> prokka_contigs_MCR
+3) Classifying taxonomy of metagenomes using GTDB_tk v2.4.0 with prodigal v2.6.3 -> GTDBtk_contigs_MCR
+4) 
+   
+### For handling the RNA-SIP metaT's:
+1) Tar unzip the sequencing files -> tar_unzip_MCR
+2) Trim adapter sequences using fastp v0.24.0 -> fastp_metaTs_MCR
+3) Fastp v0.24.0 results -> fastp_metaTs_MCR_results
+4) Download SILVA rRNA DB v138.2 -> SILVA_DB_Download
+5) Map RNA-SIP trimmed, QC'd metaT reads to SILVA rRNA DB's using Bowtie2 v2.5.4 to separate rRNA files from mRNA files -> Bowtie2_metaTs_rRNA_sep_MCR
