@@ -1,0 +1,577 @@
+# Fastp results: 
+
+1. Arrow loop 55C 13C: fastp --detect_adapter_for_pe -i AL5513CSIP_R1.fastq.gz -I AL5513CSIP_R2.fastq.gz -o AL5513CSIP_R1.trim.fastq.gz -O AL5513CSIP_R2.trim.fastq.gz --unpaired1 AL5513CSIP_R1.unpaired.fastq.gz --unpaired2 AL5513CSIP_R2.unpaired.fastq.gz 
+fastp v0.24.0, time used: 289 seconds
+
+Read1 after filtering:
+total reads: 20453109
+total bases: 2903360698
+Q20 bases: 2829162536(97.4444%)
+Q30 bases: 2755238663(94.8983%)
+
+Read2 after filtering:
+total reads: 20453109
+total bases: 2903173298
+Q20 bases: 2802385885(96.5284%)
+Q30 bases: 2711635396(93.4025%)
+
+Filtering result:
+reads passed filter: 40906218
+reads failed due to low quality: 729116
+reads failed due to too many N: 17992
+reads failed due to too short: 86150
+reads with adapter trimmed: 297874
+bases trimmed due to adapters: 3154890
+
+Duplication rate: 41.4954%
+
+Insert size peak (evaluated by paired-end reads): 152
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp v0.24.0, time used: 289 seconds
+
+
+2. Arrow loop 80C 13C: fastp --detect_adapter_for_pe -i AL8013CSIP_R1.fastq.gz -I AL8013CSIP_R2.fastq.gz -o AL8013CSIP_R1.trim.fastq.gz -O AL8013CSIP_R2.trim.fastq.gz --unpaired1 AL8013CSIP_R1.unpaired.fastq.gz --unpaired2 AL8013CSIP_R2.unpaired.fastq.gz 
+
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 49202681
+total bases: 7176288315
+Q20 bases: 6846022874(95.3978%)
+Q30 bases: 6617312002(92.2108%)
+
+Read2 before filtering:
+total reads: 49202681
+total bases: 7179121229
+Q20 bases: 6831506344(95.158%)
+Q30 bases: 6564702718(91.4416%)
+
+Read1 after filtering:
+total reads: 47749656
+total bases: 6960634795
+Q20 bases: 6696882786(96.2108%)
+Q30 bases: 6482727159(93.1341%)
+
+Read2 after filtering:
+total reads: 47749656
+total bases: 6959163495
+Q20 bases: 6689929703(96.1312%)
+Q30 bases: 6440884414(92.5526%)
+
+Filtering result:
+reads passed filter: 95499312
+reads failed due to low quality: 2792484
+reads failed due to too many N: 41840
+reads failed due to too short: 71726
+reads with adapter trimmed: 922290
+bases trimmed due to adapters: 7334134
+
+Duplication rate: 60.7763%
+
+Insert size peak (evaluated by paired-end reads): 194
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp v0.24.0, time used: 612 seconds
+
+3. Lots O Shrimp 55C 12C: fastp --detect_adapter_for_pe -i LOS5512CSIP_R1.fastq.gz -I LOS5512CSIP_R2.fastq.gz -o LOS5512CSIP_R1.trim.fastq.gz -O LOS5512CSIP_R2.trim.fastq.gz --unpaired1 LOS5512CSIP_R1.unpaired.fastq.gz --unpaired2 LOS5512CSIP_R2.unpaired.fastq.gz 
+
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 47830238
+total bases: 6711292513
+Q20 bases: 6518330693(97.1248%)
+Q30 bases: 6341480296(94.4897%)
+
+Read2 before filtering:
+total reads: 47830238
+total bases: 6719713085
+Q20 bases: 6453656782(96.0407%)
+Q30 bases: 6239739298(92.8572%)
+
+Read1 after filtering:
+total reads: 46960763
+total bases: 6591403514
+Q20 bases: 6425476953(97.4827%)
+Q30 bases: 6255777380(94.9081%)
+
+Read2 after filtering:
+total reads: 46960763
+total bases: 6591026156
+Q20 bases: 6386760123(96.9008%)
+Q30 bases: 6183607529(93.8186%)
+
+Filtering result:
+reads passed filter: 93921526
+reads failed due to low quality: 1512418
+reads failed due to too many N: 41440
+reads failed due to too short: 185092
+reads with adapter trimmed: 646610
+bases trimmed due to adapters: 5778502
+
+Duplication rate: 61.0564%
+
+Insert size peak (evaluated by paired-end reads): 152
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp v0.24.0, time used: 576 seconds
+
+4. Lots O Shrimp 55C 13C:fastp --detect_adapter_for_pe -i LOS5513CSIP_R1.fastq.gz -I LOS5513CSIP_R2.fastq.gz -o LOS5513CSIP_R1.trim.fastq.gz -O LOS5513CSIP_R2.trim.fastq.gz --unpaired1 LOS5513CSIP_R1.unpaired.fastq.gz --unpaired2 LOS5513CSIP_R2.unpaired.fastq.gz 
+
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 25529222
+total bases: 3574726863
+Q20 bases: 3475748125(97.2312%)
+Q30 bases: 3384742643(94.6854%)
+
+Read2 before filtering:
+total reads: 25529222
+total bases: 3578495721
+Q20 bases: 3442129630(96.1893%)
+Q30 bases: 3334135780(93.1714%)
+
+Read1 after filtering:
+total reads: 25123032
+total bases: 3516768190
+Q20 bases: 3431636235(97.5793%)
+Q30 bases: 3344076450(95.0895%)
+
+Read2 after filtering:
+total reads: 25123032
+total bases: 3516575774
+Q20 bases: 3408877949(96.9374%)
+Q30 bases: 3305959577(94.0108%)
+
+Filtering result:
+reads passed filter: 50246064
+reads failed due to low quality: 722146
+reads failed due to too many N: 21730
+reads failed due to too short: 68504
+reads with adapter trimmed: 347522
+bases trimmed due to adapters: 3199734
+
+Duplication rate: 51.8089%
+
+Insert size peak (evaluated by paired-end reads): 154
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp v0.24.0, time used: 327 seconds
+
+
+5. Mustard Stand 55C 13C:fastp --detect_adapter_for_pe -i MS5513CSIP_R1.fastq.gz -I MS5513CSIP_R2.fastq.gz -o MS5513CSIP_R1.trim.fastq.gz -O MS5513CSIP_R2.trim.fastq.gz --unpaired1 MS5513CSIP_R1.unpaired.fastq.gz --unpaired2 MS5513CSIP_R2.unpaired.fastq.gz 
+
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 57895446
+total bases: 8183015888
+Q20 bases: 7948462469(97.1337%)
+Q30 bases: 7731990598(94.4883%)
+
+Read2 before filtering:
+total reads: 57895446
+total bases: 8191844866
+Q20 bases: 7874352560(96.1243%)
+Q30 bases: 7613779599(92.9434%)
+
+Read1 after filtering:
+total reads: 56948696
+total bases: 8047001776
+Q20 bases: 7843184661(97.4672%)
+Q30 bases: 7635202638(94.8826%)
+
+Read2 after filtering:
+total reads: 56948696
+total bases: 8046575220
+Q20 bases: 7796456308(96.8916%)
+Q30 bases: 7548131512(93.8055%)
+
+Filtering result:
+reads passed filter: 113897392
+reads failed due to low quality: 1660570
+reads failed due to too many N: 49626
+reads failed due to too short: 183304
+reads with adapter trimmed: 850564
+bases trimmed due to adapters: 6849826
+
+Duplication rate: 63.9804%
+
+Insert size peak (evaluated by paired-end reads): 152
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp v0.24.0, time used: 662 seconds
+
+
+6. Mustard Stand 80C 12C: fastp --detect_adapter_for_pe -i MS8012CSIP_R1.fastq.gz -I MS8012CSIP_R2.fastq.gz -o MS8012CSIP_R1.trim.fastq.gz -O MS8012CSIP_R2.trim.fastq.gz --unpaired1 MS8012CSIP_R1.unpaired.fastq.gz --unpaired2 MS8012CSIP_R2.unpaired.fastq.gz 
+
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 17940480
+total bases: 2447061764
+Q20 bases: 2355694216(96.2662%)
+Q30 bases: 2290930226(93.6196%)
+
+Read2 before filtering:
+total reads: 17940480
+total bases: 2451125989
+Q20 bases: 2322536708(94.7539%)
+Q30 bases: 2243349097(91.5232%)
+
+Read1 after filtering:
+total reads: 17391650
+total bases: 2371295933
+Q20 bases: 2301634116(97.0623%)
+Q30 bases: 2241208008(94.5141%)
+
+Read2 after filtering:
+total reads: 17391650
+total bases: 2370848008
+Q20 bases: 2275607714(95.9829%)
+Q30 bases: 2202168043(92.8852%)
+
+Filtering result:
+reads passed filter: 34783300
+reads failed due to low quality: 997676
+reads failed due to too many N: 14490
+reads failed due to too short: 85494
+reads with adapter trimmed: 370140
+bases trimmed due to adapters: 4089535
+
+Duplication rate: 46.8363%
+
+Insert size peak (evaluated by paired-end reads): 123
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+
+fastp v0.24.0, time used: 274 seconds
+
+7. Shrimp Hole 55C 13C: fastp --detect_adapter_for_pe -i SH5513CSIP_R1.fastq.gz -I SH5513CSIP_R2.fastq.gz -o SH5513CSIP_R1.trim.fastq.gz -O SH5513CSIP_R2.trim.fastq.gz --unpaired1 SH5513CSIP_R1.unpaired.fastq.gz --unpaired2 SH5513CSIP_R2.unpaired.fastq.gz 
+
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 56265237
+total bases: 7724944635
+Q20 bases: 7434576759(96.2412%)
+Q30 bases: 7226638400(93.5494%)
+
+Read2 before filtering:
+total reads: 56265237
+total bases: 7733750607
+Q20 bases: 7404165376(95.7384%)
+Q30 bases: 7170800317(92.7209%)
+
+Read1 after filtering:
+total reads: 54769306
+total bases: 7510931196
+Q20 bases: 7285316058(96.9962%)
+Q30 bases: 7090179014(94.3981%)
+
+Read2 after filtering:
+total reads: 54769306
+total bases: 7509483732
+Q20 bases: 7271488625(96.8307%)
+Q30 bases: 7055216393(93.9508%)
+
+Filtering result:
+reads passed filter: 109538612
+reads failed due to low quality: 2822594
+reads failed due to too many N: 47440
+reads failed due to too short: 121828
+reads with adapter trimmed: 1074362
+bases trimmed due to adapters: 10731324
+
+Duplication rate: 49.553%
+
+Insert size peak (evaluated by paired-end reads): 123
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp v0.24.0, time used: 714 seconds
+
+8. Shrimpocalypse 55C 13C: fastp --detect_adapter_for_pe -i Shrpoc5513CSIP_R1.fastq.gz -I Shrpoc5513CSIP_R2.fastq.gz -o Shrpoc5513CSIP_R1.trim.fastq.gz -O Shrpoc5513CSIP_R2.trim.fastq.gz --unpaired1 Shrpoc5513CSIP_R1.unpaired.fastq.gz --unpaired2 Shrpoc5513CSIP_R2.unpaired.fastq.gz 
+
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 23652337
+total bases: 3298032500
+Q20 bases: 3211034964(97.3621%)
+Q30 bases: 3127654901(94.834%)
+
+Read2 before filtering:
+total reads: 23652337
+total bases: 3302038081
+Q20 bases: 3174350686(96.1331%)
+Q30 bases: 3073852797(93.0896%)
+
+Read1 after filtering:
+total reads: 23301275
+total bases: 3248000984
+Q20 bases: 3170824437(97.6239%)
+Q30 bases: 3090353560(95.1463%)
+
+Read2 after filtering:
+total reads: 23301275
+total bases: 3247844092
+Q20 bases: 3145862044(96.86%)
+Q30 bases: 3049839705(93.9035%)
+
+Filtering result:
+reads passed filter: 46602550
+reads failed due to low quality: 590250
+reads failed due to too many N: 20780
+reads failed due to too short: 91094
+reads with adapter trimmed: 325512
+bases trimmed due to adapters: 2903278
+
+Duplication rate: 66.2705%
+
+Insert size peak (evaluated by paired-end reads): 122
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp v0.24.0, time used: 302 seconds
+
+9. Shrimpocalypse 55C 13C: fastp --detect_adapter_for_pe -i SOLS5513CSIP_R1.fastq.gz -I SOLS5513CSIP_R2.fastq.gz -o SOLS5513CSIP_R1.trim.fastq.gz -O SOLS5513CSIP_R2.trim.fastq.gz --unpaired1 SOLS5513CSIP_R1.unpaired.fastq.gz --unpaired2 SOLS5513CSIP_R2.unpaired.fastq.gz 
+
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 63842377
+total bases: 8989127071
+Q20 bases: 8750775601(97.3484%)
+Q30 bases: 8521002900(94.7923%)
+
+Read2 before filtering:
+total reads: 63842377
+total bases: 8998106724
+Q20 bases: 8665932045(96.3084%)
+Q30 bases: 8385920475(93.1965%)
+
+Read1 after filtering:
+total reads: 62931576
+total bases: 8858735173
+Q20 bases: 8649328723(97.6362%)
+Q30 bases: 8427818880(95.1357%)
+
+Read2 after filtering:
+total reads: 62931576
+total bases: 8858340509
+Q20 bases: 8592781315(97.0022%)
+Q30 bases: 8325498925(93.9849%)
+
+Filtering result:
+reads passed filter: 125863152
+reads failed due to low quality: 1621588
+reads failed due to too many N: 55774
+reads failed due to too short: 144240
+reads with adapter trimmed: 878766
+bases trimmed due to adapters: 7507237
+
+Duplication rate: 68.0896%
+
+Insert size peak (evaluated by paired-end reads): 152
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp v0.24.0, time used: 748 seconds
+
+10. Undetermined??fastp --detect_adapter_for_pe -i Undetermined_R1.fastq.gz -I Undetermined_R2.fastq.gz -o Undetermined_R1.trim.fastq.gz -O Undetermined_R2.trim.fastq.gz --unpaired1 Undetermined_R1.unpaired.fastq.gz --unpaired2 Undetermined_R2.unpaired.fastq.gz 
+
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 18490361
+total bases: 2659923519
+Q20 bases: 2370761445(89.1289%)
+Q30 bases: 2248926633(84.5485%)
+
+Read2 before filtering:
+total reads: 18490361
+total bases: 2685763064
+Q20 bases: 2270269987(84.5298%)
+Q30 bases: 2120495878(78.9532%)
+
+Read1 after filtering:
+total reads: 12978593
+total bases: 1840881977
+Q20 bases: 1752789029(95.2146%)
+Q30 bases: 1691293754(91.8741%)
+
+Read2 after filtering:
+total reads: 12978593
+total bases: 1840516124
+Q20 bases: 1716727144(93.2742%)
+Q30 bases: 1638704877(89.0351%)
+
+Filtering result:
+reads passed filter: 25957186
+reads failed due to low quality: 7176964
+reads failed due to too many N: 258584
+reads failed due to too short: 3587988
+reads with adapter trimmed: 541552
+bases trimmed due to adapters: 7013766
+
+Duplication rate: 26.8603%
+
+Insert size peak (evaluated by paired-end reads): 0
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp v0.24.0, time used: 281 seconds
+
+11. White Castle 55C 13C:fastp --detect_adapter_for_pe -i WC5513CSIP_R1.fastq.gz -I WC5513CSIP_R2.fastq.gz -o WC5513CSIP_R1.trim.fastq.gz -O WC5513CSIP_R2.trim.fastq.gz --unpaired1 WC5513CSIP_R1.unpaired.fastq.gz --unpaired2 WC5513CSIP_R2.unpaired.fastq.gz 
+
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 42840637
+total bases: 6104599867
+Q20 bases: 5880835868(96.3345%)
+Q30 bases: 5711062307(93.5534%)
+
+Read2 before filtering:
+total reads: 42840637
+total bases: 6110137689
+Q20 bases: 5838794104(95.5591%)
+Q30 bases: 5646282298(92.4084%)
+
+Read1 after filtering:
+total reads: 41672805
+total bases: 5936188452
+Q20 bases: 5760472176(97.0399%)
+Q30 bases: 5600545224(94.3458%)
+
+Read2 after filtering:
+total reads: 41672805
+total bases: 5935282052
+Q20 bases: 5735356554(96.6316%)
+Q30 bases: 5555840172(93.607%)
+
+Filtering result:
+reads passed filter: 83345610
+reads failed due to low quality: 2197488
+reads failed due to too many N: 36390
+reads failed due to too short: 101786
+reads with adapter trimmed: 757674
+bases trimmed due to adapters: 6506376
+
+Duplication rate: 39.1557%
+
+Insert size peak (evaluated by paired-end reads): 154
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+
+fastp v0.24.0, time used: 580 seconds
+
+12. X18 55C 13C:fastp --detect_adapter_for_pe -i X185513CSIP_R1.fastq.gz -I X185513CSIP_R2.fastq.gz -o X185513CSIP_R1.trim.fastq.gz -O X185513CSIP_R2.trim.fastq.gz --unpaired1 X185513CSIP_R1.unpaired.fastq.gz --unpaired2 X185513CSIP_R2.unpaired.fastq.gz 
+
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 40393814
+total bases: 5839319858
+Q20 bases: 5673097880(97.1534%)
+Q30 bases: 5513606908(94.4221%)
+
+Read2 before filtering:
+total reads: 40393814
+total bases: 5843401558
+Q20 bases: 5618710242(96.1548%)
+Q30 bases: 5424393740(92.8294%)
+
+Read1 after filtering:
+total reads: 39794532
+total bases: 5751430165
+Q20 bases: 5605066070(97.4552%)
+Q30 bases: 5451068628(94.7776%)
+
+Read2 after filtering:
+total reads: 39794532
+total bases: 5751161649
+Q20 bases: 5568957221(96.8319%)
+Q30 bases: 5382700405(93.5933%)
+
+Filtering result:
+reads passed filter: 79589064
+reads failed due to low quality: 1087842
+reads failed due to too many N: 35268
+reads failed due to too short: 75454
+reads with adapter trimmed: 486134
+bases trimmed due to adapters: 4136120
+
+Duplication rate: 58.2317%
+
+Insert size peak (evaluated by paired-end reads): 185
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp v0.24.0, time used: 512 seconds
