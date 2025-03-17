@@ -1,0 +1,52 @@
+The SIP MetaT files are here: /proj/omics/huber/selkassas/MCR_RNASIP 
+
+Enter scavenger: srun -p scavenger --time=04:00:00 --ntasks-per-node 2 --mem=12gb --pty bash
+
+#tar unzip the sequencing files:
+tar -xvzf <insert filename.tar.gz>
+tar -xvzf Elkassas_20220624.tar.gz
+
+These are the ones we sequenced: 
+Arrow Loop 55C 13C
+Elkassas_20220624/AL5513CSIP_R2.fastq.gz
+Elkassas_20220624/AL5513CSIP_R1.fastq.gz
+
+Lots O' Shrimp 55C 13C
+Elkassas_20220624/LOS5513CSIP_R1.fastq.gz
+Elkassas_20220624/LOS5513CSIP_R2.fastq.gz
+
+Shrimpocalypse 55C 13C
+Elkassas_20220624/Shrpoc5513CSIP_R1.fastq.gz
+Elkassas_20220624/Shrpoc5513CSIP_R2.fastq.gz
+
+Lots O' Shrimp 55C 12C
+Elkassas_20220624/LOS5512CSIP_R1.fastq.gz
+Elkassas_20220624/LOS5512CSIP_R2.fastq.gz
+
+South of Lung Snack 55C 13C
+Elkassas_20220624/SOLS5513CSIP_R1.fastq.gz
+Elkassas_20220624/SOLS5513CSIP_R2.fastq.gz
+
+Mustard Stand 55C 13C
+Elkassas_20220624/MS5513CSIP_R1.fastq.gz
+Elkassas_20220624/MS5513CSIP_R2.fastq.gz
+
+White Castle 55C 13C
+Elkassas_20220624/WC5513CSIP_R1.fastq.gz
+Elkassas_20220624/WC5513CSIP_R2.fastq.gz
+
+X-18 55C 13C
+Elkassas_20220624/X185513CSIP_R1.fastq.gz
+Elkassas_20220624/X185513CSIP_R2.fastq.gz
+
+Shrimp Hole 55C 13C
+Elkassas_20220624/SH5513CSIP_R1.fastq.gz
+Elkassas_20220624/SH5513CSIP_R2.fastq.gz
+
+Mustard Stand 80C 12C
+Elkassas_20220624/MS8012CSIP_R1.fastq.gz
+Elkassas_20220624/MS8012CSIP_R2.fastq.gz
+
+Arrow Loop 80C 13C
+Elkassas_20220624/AL8013CSIP_R1.fastq.gz
+Elkassas_20220624/AL8013CSIP_R2.fastq.gz
