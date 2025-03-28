@@ -1,0 +1,75 @@
+#5. Use SortMeRNA to separate rRNA Reads from mRNA reads in the metaT’s
+
+#Add the required conda channels: 
+conda config --add channels defaults
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+
+#install the latest version: 
+conda create —-name sortmerna-4.3.6
+conda activate sortmerna-4.3.6
+conda install sortmerna
+
+#environment location: /vortexfs1/home/selkassas/miniforge3/envs/sortmerna-4.3.6
+
+#Below is the shell script to submit to slurm. filename: sortmerna.sh
+#I chose to run the 12 metaT's in parallel using an array. 
+------
+#!/bin/bash
+#SBATCH --partition=compute
+#SBATCH --job-name=MCR_sortmerna
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=selkassas@whoi.edu
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=36
+#SBATCH --mem=180gb
+#SBATCH --time=24:00:00
+#SBATCH --array=0-11
+#SBATCH --output=MCR_sortmerna_%A_%a.log
+
+# Match OMP threads to SLURM CPUs
+export OMP_NUM_THREADS=36
+
+eval "$(/vortexfs1/home/selkassas/miniforge3/bin/conda shell.bash hook)" 
+conda activate /vortexfs1/home/selkassas/miniforge3/envs/sortmerna-4.3.6
+
+cd /vortexfs1/omics/huber/selkassas/MCR_RNASIP/Elkassas_20220624/fastp_trimmed_QCd_SIP_metaTs
+
+# Get the corresponding line from your sample list
+LINE=$(sed -n "$((SLURM_ARRAY_TASK_ID + 1))p" samples.txt)
+R1=$(echo $LINE | cut -d ' ' -f 1)
+R2=$(echo $LINE | cut -d ' ' -f 2)
+
+# Derive sample name from filename
+SAMPLE=$(basename $R1 | cut -d '_' -f 1)
+
+#create a uniquely named output directory for each sample
+OUTDIR="/vortexfs1/omics/huber/selkassas/MCR_RNASIP/Elkassas_20220624/sortmerna_output/$SAMPLE"
+mkdir -p "$OUTDIR"
+
+#create a working directory for each sample, so we don’t get conflicts running in parallel
+WORKDIR="/$SCRATCH/sortmerna_tmp/$SAMPLE"
+mkdir -p "$WORKDIR"
+
+# Run SortMeRNA
+sortmerna \
+  --ref /vortexfs1/omics/huber/db/rRNA_databases/combined_rRNA_prok.fasta \
+  --reads "$R1" \
+  --reads "$R2" \
+  --fastx \
+  --other "${OUTDIR}/${SAMPLE}_nonrRNA" \
+  --aligned "${OUTDIR}/${SAMPLE}_rRNA" \
+  --blast '1'  \
+  --workdir "$WORKDIR" \
+  --paired_in \
+  --v 
+
+# Clean kvdb cache
+rm -rf $HOME/sortmerna/run/kvdb/
+-----
+#to run this: sbatch sortmerna.sh
+#This took 8 hours to complete. 
+#using the blast output, you can align your blast sample to the tax file downloaded from Silva (not NR99) and it will give you the taxonomy of your removed rRNA reads. 
+#To double check if everything was run correctly, you can also do sortmerna to only eukaryotic rRNA in the databases and check out the file sizes of the results. if doing that, combine 
+#the sorted SSU and LSU db with the RFAM5.8s database. 
