@@ -1,0 +1,42 @@
+# Load BBTools
+eval "$(/vortexfs1/home/selkassas/miniforge3/bin/conda shell.bash hook)" 
+conda activate /vortexfs1/home/selkassas/miniforge3/envs/bbtools_v37.62
+
+cd /vortexfs1/omics/huber/selkassas/MCR_RNASIP/Elkassas_20220624/fastp_trimmed_QCd_SIP_metaTs
+
+#sample 1: AL5513CSIP
+reformat.sh in1=AL5513CSIP_R1.trim.fastq in2=AL5513CSIP_R2.trim.fastq out=AL5513CSIP_trim_interleaved.fastq
+
+#sample 2: AL8013CSIP
+reformat.sh in1=AL8013CSIP_R1.trim.fastq in2=AL8013CSIP_R2.trim.fastq out=AL8013CSIP_trim_interleaved.fastq
+
+#sample 3: LOS5512CSIP
+reformat.sh in1=LOS5512CSIP_R1.trim.fastq in2=LOS5512CSIP_R2.trim.fastq out=LOS5512CSIP_trim_interleaved.fastq
+
+#sample 4: LOS5513CSIP
+reformat.sh in1=LOS5513CSIP_R1.trim.fastq in2=LOS5513CSIP_R2.trim.fastq out=LOS5513CSIP_trim_interleaved.fastq
+
+#sample 5: MS5513CSIP
+reformat.sh in1=MS5513CSIP_R1.trim.fastq in2=MS5513CSIP_R2.trim.fastq out=MS5513CSIP_trim_interleaved.fastq
+
+#sample 6: MS8012CSIP
+reformat.sh in1=MS8012CSIP_R1.trim.fastq in2=MS8012CSIP_R2.trim.fastq out=MS8012CSIP_trim_interleaved.fastq
+
+#sample 7: SH5513CSIP
+reformat.sh in1=SH5513CSIP_R1.trim.fastq in2=SH5513CSIP_R2.trim.fastq out=SH5513CSIP_trim_interleaved.fastq
+
+#sample 8: Shrpoc5513CSIP
+reformat.sh in1=Shrpoc5513CSIP_R1.trim.fastq in2=Shrpoc5513CSIP_R2.trim.fastq out=Shrpoc5513CSIP_trim_interleaved.fastq
+
+#sample 9: SOLS5513CSIP
+reformat.sh in1=SOLS5513CSIP_R1.trim.fastq in2=SOLS5513CSIP_R2.trim.fastq out=SOLS5513CSIP_trim_interleaved.fastq
+
+#sample 10: Undetermined
+reformat.sh in1=Undetermined_R1.trim.fastq in2=Undetermined_R2.trim.fastq out=Undetermined_trim_interleaved.fastq
+
+#sample 11: WC5513CSIP
+reformat.sh in1=WC5513CSIP_R1.trim.fastq in2=WC5513CSIP_R2.trim.fastq out=WC5513CSIP_trim_interleaved.fastq
+
+#sample 12: X185513CSIP
+reformat.sh in1=X185513CSIP_R1.trim.fastq in2=X185513CSIP_R2.trim.fastq out=X185513CSIP_trim_interleaved.fastq
+
