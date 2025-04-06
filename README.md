@@ -16,6 +16,5 @@ QC and trimming of the unmanipulated fluid metatranscriptomes were done using th
 1) Tar unzip the sequencing files -> tar_unzip_MCR
 2) Trim adapter sequences using fastp v0.24.0 -> fastp_metaTs_MCR
 3) Fastp v0.24.0 results -> fastp_metaTs_MCR_results
-4) Download SILVA rRNA DBs v138.2 -> SILVA_DB_Download
-5) Remove eukaryotes from the SSU and LSU database and concatenate with the RFAM 5S database to make a prokaryotic reference rRNA file -> make_rRNA_ref_db
-6) Separate non-coding RNA from coding RNA in trimmed, QC'd RNA-SIP metaT's using SortMeRNAv4.3.6 -> sortmerna_MCR
+4) Interleave reads with BBtoolsv37.62 -> bbtools_interleave_reads_MCR
+5) Separate non-coding RNA from coding RNA in trimmed, QC'd RNA-SIP metaT's using SortMeRNAv4.3.6, including rRNA database download and indexing. -> sortmerna_MCR
