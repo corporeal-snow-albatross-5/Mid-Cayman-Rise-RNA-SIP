@@ -1,4 +1,4 @@
-#5. Use SortMeRNA to separate rRNA Reads from mRNA reads in the metaT’s
+5. Use SortMeRNA to separate rRNA Reads from mRNA reads in the metaT’s
 
 #Add the required conda channels: 
 conda config --add channels defaults
@@ -11,24 +11,150 @@ conda create —-name sortmerna-4.3.6
 conda activate sortmerna-4.3.6
 conda install sortmerna
 
-#environment location: /vortexfs1/home/selkassas/miniforge3/envs/sortmerna-4.3.6
+environment location: /vortexfs1/home/selkassas/miniforge3/envs/sortmerna-4.3.6
 
-#Below is the shell script to submit to slurm. filename: sortmerna.sh
-#I chose to run the 12 metaT's in parallel using an array. 
-------
+Download the source db: https://github.com/biocore/sortmerna/releases/download/v4.3.4/database.tar.gz 
+
+We recommend to use smr_v4.3_default_db.fasta.
+Original source databases (clustering parameters given below):
+	•	Silva 138 SSURef NR99 (16S, 18S)
+	•	Silva 132 LSURef (23S, 28S)
+	•	RFAM v14.1 (5S, 5.8S)
+The difference between the databases is the % ID for clustering the sequences for each kingdom + rRNA component.
+Specifically,
+	•	smr_v4.3_fast_db.fasta
+	◦	bac-16S 85%, 5S & 5.8S seeds, rest 90% (benchmark accuracy: 99.888%)
+	•	smr_v4.3_default_db.fasta
+	◦	bac-16S 90%, 5S & 5.8S seeds, rest 95% (benchmark accuracy: 99.899%)
+	•	smr_v4.3_sensitive_db.fasta
+	◦	all 97% (benchmark accuracy: 99.907%)
+	•	smr_v4.3_sensitive_db_rfam_seeds.fasta
+	◦	all 97%, except RFAM database which includes the full seed database sequences
+The accuracy (based on sensitivity and selectivity) is very good for all databases, however the "sensitive" databases will run at least 2x slower.
+
+#unzip the source db
+tar -xvzf <insert filename.tar.gz>
+tar -xvzf database.tar.gz 
+
+
+#Interleave the reads with bbtools for easier downstream processing. 
+
 #!/bin/bash
 #SBATCH --partition=compute
-#SBATCH --job-name=MCR_sortmerna
+#SBATCH --job-name=bbtools_interleave
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=selkassas@whoi.edu
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=36
-#SBATCH --mem=180gb
+#SBATCH --cpus-per-task=12
+#SBATCH --mem=70gb
 #SBATCH --time=24:00:00
-#SBATCH --array=0-11
-#SBATCH --output=MCR_sortmerna_%A_%a.log
-
+#SBATCH --output=bbtools_interleave.log
 # Match OMP threads to SLURM CPUs
+export OMP_NUM_THREADS=12
+
+# Load BBTools
+eval "$(/vortexfs1/home/selkassas/miniforge3/bin/conda shell.bash hook)" 
+conda activate /vortexfs1/home/selkassas/miniforge3/envs/bbtools_v37.62
+
+cd /vortexfs1/omics/huber/selkassas/MCR_RNASIP/Elkassas_20220624/fastp_trimmed_QCd_SIP_metaTs
+
+#sample 1: AL5513CSIP
+reformat.sh in1=AL5513CSIP_R1.trim.fastq in2=AL5513CSIP_R2.trim.fastq out=AL5513CSIP_trim_interleaved.fastq
+
+#sample 2: AL8013CSIP
+reformat.sh in1=AL8013CSIP_R1.trim.fastq in2=AL8013CSIP_R2.trim.fastq out=AL8013CSIP_trim_interleaved.fastq
+
+#sample 3: LOS5512CSIP
+reformat.sh in1=LOS5512CSIP_R1.trim.fastq in2=LOS5512CSIP_R2.trim.fastq out=LOS5512CSIP_trim_interleaved.fastq
+
+#sample 4: LOS5513CSIP
+reformat.sh in1=LOS5513CSIP_R1.trim.fastq in2=LOS5513CSIP_R2.trim.fastq out=LOS5513CSIP_trim_interleaved.fastq
+
+#sample 5: MS5513CSIP
+reformat.sh in1=MS5513CSIP_R1.trim.fastq in2=MS5513CSIP_R2.trim.fastq out=MS5513CSIP_trim_interleaved.fastq
+
+#sample 6: MS8012CSIP
+reformat.sh in1=MS8012CSIP_R1.trim.fastq in2=MS8012CSIP_R2.trim.fastq out=MS8012CSIP_trim_interleaved.fastq
+
+#sample 7: SH5513CSIP
+reformat.sh in1=SH5513CSIP_R1.trim.fastq in2=SH5513CSIP_R2.trim.fastq out=SH5513CSIP_trim_interleaved.fastq
+
+#sample 8: Shrpoc5513CSIP
+reformat.sh in1=Shrpoc5513CSIP_R1.trim.fastq in2=Shrpoc5513CSIP_R2.trim.fastq out=Shrpoc5513CSIP_trim_interleaved.fastq
+
+#sample 9: SOLS5513CSIP
+reformat.sh in1=SOLS5513CSIP_R1.trim.fastq in2=SOLS5513CSIP_R2.trim.fastq out=SOLS5513CSIP_trim_interleaved.fastq
+
+#sample 10: Undetermined
+reformat.sh in1=Undetermined_R1.trim.fastq in2=Undetermined_R2.trim.fastq out=Undetermined_trim_interleaved.fastq
+
+#sample 11: WC5513CSIP
+reformat.sh in1=WC5513CSIP_R1.trim.fastq in2=WC5513CSIP_R2.trim.fastq out=WC5513CSIP_trim_interleaved.fastq
+
+#sample 12: X185513CSIP
+reformat.sh in1=X185513CSIP_R1.trim.fastq in2=X185513CSIP_R2.trim.fastq out=X185513CSIP_trim_interleaved.fastq
+
+
+
+#Index the reference database
+
+#!/bin/bash
+#SBATCH --partition=compute                          # Queue selection
+#SBATCH --job-name=sortmerna_MCR_indx                # Job name
+#SBATCH --mail-type=ALL                              # Mail events (BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=selkassas@whoi.edu               # Where to send mail
+#SBATCH --ntasks=1                                   # Run a single task
+#SBATCH --cpus-per-task=36                           # Number of CPU cores per task
+#SBATCH --mem=40gb                                   # Job memory request
+#SBATCH --time=16:00:00
+#SBATCH --output=MCR_sortmerna_indx.log              # Time limit hrs:min:sec
+
+export OMP_NUM_THREADS=36
+
+eval "$(/vortexfs1/home/selkassas/miniforge3/bin/conda shell.bash hook)" 
+conda activate /vortexfs1/home/selkassas/miniforge3/envs/sortmerna-4.3.6
+
+cd /vortexfs1/omics/huber/selkassas/MCR_RNASIP/Elkassas_20220624/fastp_trimmed_QCd_SIP_metaTs
+
+# Run SortMeRNA indexing
+sortmerna \
+  --ref /vortexfs1/omics/huber/db/rRNA_databases/sortmerna_v4_reference_dbs/smr_v4.3_sensitive_db_rfam_seeds.fasta \
+  --reads /vortexfs1/omics/huber/selkassas/MCR_RNASIP/Elkassas_20220624/fastp_trimmed_QCd_SIP_metaTs/AL5513CSIP_trim_interleaved.fastq \
+  --index '1' \
+  --threads 36 \
+  --idx-dir /vortexfs1/omics/huber/selkassas/MCR_RNASIP/Elkassas_20220624/sortmerna_index
+
+#Run SortmeRNA on all samples
+
+#create file that has all of your sample names. Should look like this: 
+
+AL5513CSIP_trim_interleaved.fastq
+AL8013CSIP_trim_interleaved.fastq
+LOS5512CSIP_trim_interleaved.fastq
+LOS5513CSIP_trim_interleaved.fastq
+MS5513CSIP_trim_interleaved.fastq
+MS8012CSIP_trim_interleaved.fastq
+SH5513CSIP_trim_interleaved.fastq
+Shrpoc5513CSIP_trim_interleaved.fastq
+SOLS5513CSIP_trim_interleaved.fastq
+Undetermined_trim_interleaved.fastq
+WC5513CSIP_trim_interleaved.fastq
+X185513CSIP_trim_interleaved.fastq
+
+#Run sortmerna on your samples
+
+#!/bin/bash
+#SBATCH --partition=compute                          # Queue selection
+#SBATCH --job-name=sortmerna_MCR_samples             # Job name
+#SBATCH --mail-type=ALL                              # Mail events (BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=selkassas@whoi.edu               # Where to send mail
+#SBATCH --ntasks=1                                   # Run a single task
+#SBATCH --cpus-per-task=36                           # Number of CPU cores per task
+#SBATCH --mem=180gb                                  # Job memory request
+#SBATCH --time=24:00:00								   # Time limit hrs:min:sec
+#SBATCH --array=0-11								   # Run as an array
+#SBATCH --output=MCR_sortmerna_samples_%A_%a.log     # Job log name
+
 export OMP_NUM_THREADS=36
 
 eval "$(/vortexfs1/home/selkassas/miniforge3/bin/conda shell.bash hook)" 
@@ -38,8 +164,7 @@ cd /vortexfs1/omics/huber/selkassas/MCR_RNASIP/Elkassas_20220624/fastp_trimmed_Q
 
 # Get the corresponding line from your sample list
 LINE=$(sed -n "$((SLURM_ARRAY_TASK_ID + 1))p" samples.txt)
-R1=$(echo $LINE | cut -d ' ' -f 1)
-R2=$(echo $LINE | cut -d ' ' -f 2)
+R1=$(echo $LINE)
 
 # Derive sample name from filename
 SAMPLE=$(basename $R1 | cut -d '_' -f 1)
@@ -52,24 +177,19 @@ mkdir -p "$OUTDIR"
 WORKDIR="/$SCRATCH/sortmerna_tmp/$SAMPLE"
 mkdir -p "$WORKDIR"
 
-# Run SortMeRNA
+# Run SortMeRNA in parallel
 sortmerna \
-  --ref /vortexfs1/omics/huber/db/rRNA_databases/combined_rRNA_prok.fasta \
+  --ref /vortexfs1/omics/huber/db/rRNA_databases/sortmerna_v4_reference_dbs/smr_v4.3_sensitive_db_rfam_seeds.fasta \
   --reads "$R1" \
-  --reads "$R2" \
+  --idx-dir /vortexfs1/omics/huber/selkassas/MCR_RNASIP/Elkassas_20220624/sortmerna_index \
   --fastx \
   --other "${OUTDIR}/${SAMPLE}_nonrRNA" \
   --aligned "${OUTDIR}/${SAMPLE}_rRNA" \
-  --blast '1'  \
+  --blast '1' \
+  --paired \
+  --threads 36 \
   --workdir "$WORKDIR" \
   --paired_in \
-  --v 
-
-# Clean kvdb cache
-rm -rf $HOME/sortmerna/run/kvdb/
------
-#to run this: sbatch sortmerna.sh
-#This took 8 hours to complete. 
-#using the blast output, you can align your blast sample to the tax file downloaded from Silva (not NR99) and it will give you the taxonomy of your removed rRNA reads. 
-#To double check if everything was run correctly, you can also do sortmerna to only eukaryotic rRNA in the databases and check out the file sizes of the results. if doing that, combine 
-#the sorted SSU and LSU db with the RFAM5.8s database. 
+  --sam \
+  --otu_map \
+  -v
